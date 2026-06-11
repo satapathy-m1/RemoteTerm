@@ -1,8 +1,11 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import pool from '../db/pool.js';
 
+// Initialize the client
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-8b' });
+
+// Use a supported production model identifier
+const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
 // Strip ANSI escape codes before sending to Gemini
 function stripAnsi(str) {
@@ -23,7 +26,15 @@ ${plainText}
 
   try {
     const result = await model.generateContent(prompt);
-    const summary = result.response.text();
+    
+    // Ensure response text is extracted properly
+    const response = await result.response;
+    const summary = response.text();
+
+    if (!summary) {
+      console.warn(`[AI] Warning: Empty response generated for session ${sessionId}`);
+      return null;
+    }
 
     // Save to DB
     await pool.query(

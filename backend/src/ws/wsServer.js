@@ -74,7 +74,7 @@ function startSummaryTimer(sessionId) {
         timestamp: new Date().toISOString(),
       });
     }
-  }, 60000); // every 60 seconds
+  }, 600000); // every 10 minutes
 
   summaryTimers.set(sessionId, timer);
   console.log(`[AI] Summary timer started for session ${sessionId}`);
