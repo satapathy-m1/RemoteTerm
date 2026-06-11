@@ -1,2 +1,2 @@
-SERVER_URL = "http://172.24.240.1:3001" 
-WS_URL = "ws://172.24.240.1:3001"
+SERVER_URL = "https://remoterm-backend.onrender.com"
+WS_URL = "wss://remoterm-backend.onrender.com"

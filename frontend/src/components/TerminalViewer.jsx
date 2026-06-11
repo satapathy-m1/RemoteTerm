@@ -30,7 +30,8 @@ export default function TerminalViewer({ sessionId, token, onMessage }) {
     const onResize = () => fitAddon.fit();
     window.addEventListener('resize', onResize);
 
-    const wsUrl = `ws://localhost:3001/ws/browser?token=${token}&sessionId=${sessionId}`;
+    const wsBase = import.meta.env.VITE_WS_URL || 'ws://localhost:3001';
+    const wsUrl = `${wsBase}/ws/browser?token=${token}&sessionId=${sessionId}`;
     const ws = new WebSocket(wsUrl);
     wsRef.current = ws;
 
